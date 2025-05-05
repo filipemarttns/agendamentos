@@ -81,6 +81,9 @@ document.querySelectorAll('.barbeiro').forEach(barbeiro => {
       if (servicos) {
         servicos.style.display = 'block'; // exibe a tabela de serviços
         servicos.classList.add('visivel');
+        
+        // Rolagem automática até a seção de serviços
+        servicos.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
       barbeiro.classList.remove('selecionado');
