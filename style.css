@@ -417,3 +417,95 @@ button:hover {
   transform: translateY(0);
   pointer-events: auto;
 }
+#calendario-container {
+  display: none; /* Começa escondido */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.titulo-mes {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.frase-escolha {
+  font-size: 1.2em;
+  margin-bottom: 20px; /* Espaço entre "Escolha o dia" e o título */
+}
+
+.semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.dia-semana {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.dia-vazio {
+  background-color: transparent;
+}
+
+.dia {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 1.2em; /* Aumentei o tamanho da fonte dos botões */
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dia:hover {
+  background-color: #45a049;
+  transform: scale(1.1);
+}
+
+.dia:active {
+  background-color: #388e3c;
+}
+
+.dia:disabled {
+  background-color: #e0e0e0;
+  color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+#calendario-container p {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Estilo para tornar o layout responsivo */
+@media (max-width: 600px) {
+  .dia {
+    font-size: 1em; /* Ajuste o tamanho da fonte em telas menores */
+    padding: 8px;  /* Menos padding para telas pequenas */
+  }
+  .dia-semana {
+    font-size: 1em; /* Ajuste o tamanho da fonte dos dias da semana */
+  }
+  .titulo-mes {
+    font-size: 1.2em; /* Ajuste o tamanho do título para telas pequenas */
+  }
+  .frase-escolha {
+    font-size: 1em;
+  }
+}
