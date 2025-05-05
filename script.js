@@ -79,38 +79,35 @@ document.querySelectorAll('.barbeiro').forEach(barbeiro => {
         if (b !== barbeiro) b.classList.add('desfocado');
       });
       if (servicos) {
-        servicos.style.display = 'block'; // Exibe a tabela de serviços
+        servicos.style.display = 'block';
         servicos.classList.add('visivel');
-        
-        // Rolagem automática até a seção de serviços
         servicos.scrollIntoView({ behavior: 'smooth' });
       }
-      // Exibe o calendário
       if (calendarioContainer) {
-        calendarioContainer.style.display = 'block'; // Torna o calendário visível
-        // Garante que o calendário seja recriado ao selecionar o serviço
-        criarCalendario(new Date().getMonth(), new Date().getFullYear());
+        calendarioContainer.style.display = 'block';
+        criarCalendario(mesAtual, anoAtual);
       }
     } else {
       barbeiro.classList.remove('selecionado');
       if (servicos) {
-        servicos.style.display = 'none'; // Esconde a tabela de serviços
+        servicos.style.display = 'none';
         servicos.classList.remove('visivel');
       }
-      // Esconde o calendário
       if (calendarioContainer) {
-        calendarioContainer.style.display = 'none'; // Esconde o calendário
+        calendarioContainer.style.display = 'none';
       }
     }
   });
 });
+
+let mesAtual = new Date().getMonth();
+let anoAtual = new Date().getFullYear();
 
 function criarCalendario(mes, ano) {
   const calendarioContainer = document.getElementById('calendario-container');
   const calendarioSection = document.getElementById('calendario');
   const checkboxes = document.querySelectorAll('input[name="servico"]');
 
-  // Verifica se algum serviço está selecionado
   const algumSelecionado = Array.from(checkboxes).some(cb => cb.checked);
   if (!algumSelecionado) {
     calendarioSection.style.display = 'none';
@@ -119,35 +116,39 @@ function criarCalendario(mes, ano) {
     calendarioSection.style.display = 'block';
   }
 
-  calendarioContainer.innerHTML = ''; // Limpa o calendário atual
+  calendarioContainer.innerHTML = '';
 
   const primeiroDiaDoMes = new Date(ano, mes, 1);
   const ultimoDiaDoMes = new Date(ano, mes + 1, 0);
   const diasDaSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
-  // Título do mês
+  // Título do mês com navegação futura
+  const tituloWrapper = document.createElement('div');
+  tituloWrapper.classList.add('titulo-mes-navegacao');
+
   const tituloMes = document.createElement('div');
   tituloMes.classList.add('titulo-mes');
   tituloMes.textContent = `${primeiroDiaDoMes.toLocaleString('default', { month: 'long' })} ${ano}`;
-  calendarioContainer.appendChild(tituloMes);
+  tituloWrapper.appendChild(tituloMes);
 
-  // Navegação entre meses
-  const navegacaoMes = document.createElement('div');
-  navegacaoMes.classList.add('navegacao-mes');
+  // Botão para mês seguinte
+  const botaoProximo = document.createElement('button');
+  botaoProximo.classList.add('seta-mes');
+  botaoProximo.innerHTML = '→';
+  botaoProximo.onclick = () => {
+    const hoje = new Date();
+    const novoMes = mes + 1;
+    const novaData = new Date(ano, novoMes, 1);
+    if (novaData >= new Date(hoje.getFullYear(), hoje.getMonth(), 1)) {
+      mesAtual = novoMes;
+      anoAtual = novaData.getFullYear();
+      criarCalendario(mesAtual, anoAtual);
+    }
+  };
+  tituloWrapper.appendChild(botaoProximo);
+  calendarioContainer.appendChild(tituloWrapper);
 
-  const botaoMesAnterior = document.createElement('button');
-  botaoMesAnterior.textContent = 'Anterior';
-  botaoMesAnterior.onclick = () => criarCalendario(mes - 1, ano);
-
-  const botaoMesProximo = document.createElement('button');
-  botaoMesProximo.textContent = 'Próximo';
-  botaoMesProximo.onclick = () => criarCalendario(mes + 1, ano);
-
-  navegacaoMes.appendChild(botaoMesAnterior);
-  navegacaoMes.appendChild(botaoMesProximo);
-  calendarioContainer.appendChild(navegacaoMes);
-
-  // Dias da semana
+  // Cabeçalho dos dias da semana
   const semanaHeader = document.createElement('div');
   semanaHeader.classList.add('semana');
   diasDaSemana.forEach(dia => {
@@ -162,14 +163,12 @@ function criarCalendario(mes, ano) {
   let semanaAtual = document.createElement('div');
   semanaAtual.classList.add('semana');
 
-  // Espaços vazios antes do 1º dia do mês
   for (let i = 0; i < primeiroDiaDoMes.getDay(); i++) {
     const vazio = document.createElement('div');
     vazio.classList.add('dia-vazio');
     semanaAtual.appendChild(vazio);
   }
 
-  // Dias do mês
   for (let dia = 1; dia <= ultimoDiaDoMes.getDate(); dia++) {
     const botaoDia = document.createElement('button');
     botaoDia.classList.add('dia');
@@ -178,7 +177,6 @@ function criarCalendario(mes, ano) {
 
     semanaAtual.appendChild(botaoDia);
 
-    // Se completou a semana, adiciona ao DOM e reinicia
     if (semanaAtual.children.length === 7) {
       calendarioContainer.appendChild(semanaAtual);
       semanaAtual = document.createElement('div');
@@ -186,19 +184,16 @@ function criarCalendario(mes, ano) {
     }
   }
 
-  // Adiciona a última semana se estiver incompleta
   if (semanaAtual.children.length > 0) {
     calendarioContainer.appendChild(semanaAtual);
   }
 }
 
-// Início automático
 const hoje = new Date();
-criarCalendario(hoje.getMonth(), hoje.getFullYear());
+criarCalendario(mesAtual, anoAtual);
 
-// Atualiza o calendário quando marcar/desmarcar serviços
 document.querySelectorAll('input[name="servico"]').forEach(cb => {
   cb.addEventListener('change', () => {
-    criarCalendario(hoje.getMonth(), hoje.getFullYear());
+    criarCalendario(mesAtual, anoAtual);
   });
 });
