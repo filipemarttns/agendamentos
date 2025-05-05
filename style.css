@@ -1,0 +1,186 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  background-color: #000;
+  font-family: 'Helvetica Neue', sans-serif;
+  color: white;
+  overflow: hidden;
+}
+
+.container {
+  height: 100vh;
+  width: 100%;
+  background: radial-gradient(circle at center, #111 0%, #000 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1s ease, filter 1s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.logo-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: logoIn 1.6s ease forwards;
+  margin-bottom: 40px;
+}
+
+.logo {
+  width: 220px;
+  max-width: 80%;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: logoZoom 1.6s ease forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes logoZoom {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.frases {
+  position: absolute;
+  top: 40px;
+  text-align: center;
+  font-size: 1.5rem;
+  opacity: 0.7;
+  animation: fraseFade 5s infinite;
+}
+
+.frase {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.frase.ativo {
+  display: block;
+  opacity: 1;
+}
+
+@keyframes fraseFade {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.formulario {
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: formFade 2s ease forwards;
+  animation-delay: 2s;
+}
+
+@keyframes formFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+label {
+  font-size: 1.3rem;
+  display: block;
+  margin-bottom: 15px;
+}
+
+input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid white;
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px;
+  text-align: center;
+  outline: none;
+  transition: 0.4s;
+}
+
+input:focus {
+  border-bottom: 2px solid #fff;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+}
+
+button {
+  margin-top: 25px;
+  padding: 12px 32px;
+  font-size: 1rem;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  display: none;
+}
+
+button:hover {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.next-screen {
+  opacity: 0;
+  filter: blur(10px);
+  z-index: -1;
+}
+
+.next-screen.active {
+  opacity: 1;
+  filter: blur(0);
+  z-index: 1;
+  transition: opacity 1s ease, filter 1s ease;
+}
+
+.boas-vindas {
+  text-align: center;
+  animation: fadeUp 1s ease forwards;
+}
+
+.boas-vindas h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.boas-vindas p {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .logo {
+    width: 150px;
+  }
+
+  .frases {
+    font-size: 1.2rem;
+  }
+
+  label {
+    font-size: 1.2rem;
+  }
+
+  input {
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+  }
+}
