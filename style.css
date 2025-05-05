@@ -417,39 +417,41 @@ button:hover {
   transform: translateY(0);
   pointer-events: auto;
 }
-/* Centraliza todo o conteúdo do calendário */
-/* Centraliza todo o conteúdo do calendário */
+/* Seção do calendário centralizada verticalmente e com fundo transparente */
+#calendario {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 20px;
+}
+
+/* Container do calendário */
 #calendario-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   text-align: center;
-  margin-bottom: 20px;
   padding: 10px;
   width: 100%;
-  height: 100vh; /* Garante que o calendário ocupe a altura total da tela */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  max-width: 800px;
 }
 
-/* Cabeçalho com mês + seta de navegação */
+/* Cabeçalho com mês + setas */
 .titulo-mes-navegacao {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;
-  justify-content: center; /* Centraliza a seta de navegação */
+  justify-content: center;
 }
 
 .titulo-mes {
   font-size: 1.5em;
   font-weight: bold;
-  text-align: center;
 }
 
-/* Botão da seta */
 .seta-mes {
   background: none;
   border: none;
@@ -464,23 +466,20 @@ button:hover {
   color: #388e3c;
 }
 
-/* Frase "Escolha" abaixo do calendário */
+/* Frase abaixo do título */
 .frase-escolha {
   font-size: 1.2em;
   margin-bottom: 20px;
-  text-align: center;
 }
 
-/* Estilo das semanas (com 7 dias) */
+/* Grade dos dias da semana */
 .semana {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 5px;
   width: 100%;
-  max-width: 600px; /* Ajuste da largura do calendário */
+  max-width: 600px;
   margin-bottom: 10px;
-  justify-content: center; /* Centraliza os dias da semana */
-  align-items: center; /* Centraliza verticalmente os itens dentro da grid */
 }
 
 .dia-semana {
@@ -488,19 +487,19 @@ button:hover {
   font-weight: bold;
   font-size: 1.2em;
   color: #333;
-  width: 100%; /* Garante que o texto ocupe a largura total da célula */
+  width: 100%;
 }
 
 .dia-vazio {
   background-color: transparent;
 }
 
-/* Botões dos dias - branco e preto */
+/* Estilo dos botões dos dias */
 button.dia {
   all: unset;
   display: inline-block;
-  background-color: #ffffff; /* Fundo branco */
-  color: #000000;            /* Texto preto */
+  background-color: #ffffff;
+  color: #000000;
   font-size: 1.1em;
   width: 50px;
   height: 50px;
@@ -534,10 +533,9 @@ button.dia:disabled {
   font-size: 1.2rem;
   margin-bottom: 10px;
   font-weight: bold;
-  text-align: center; /* Centraliza as frases dentro do calendário */
 }
 
-/* Responsivo */
+/* Responsivo para mobile */
 @media (max-width: 600px) {
   .dia-semana {
     font-size: 1em;
@@ -568,4 +566,18 @@ button.dia:disabled {
     font-size: 1.2em;
   }
 }
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 
+/* Centraliza vertical e horizontalmente apenas a seção do calendário */
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/*
