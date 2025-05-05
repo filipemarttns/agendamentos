@@ -33,7 +33,7 @@ botao.addEventListener('click', () => {
     
     // Libera a rolagem depois que a tela de boas-vindas aparecer
     document.body.style.overflow = 'auto'; 
-  }, 1000);
+  }, 300);
 });
 
 // Alternância das frases
@@ -51,8 +51,6 @@ telaProxima.addEventListener('mousedown', (e) => {
   isDragging = true;
   startY = e.clientY;
   scrollTop = window.scrollY;
-  tesouraEsquerda.classList.add('mostrar');
-  tesouraDireita.classList.add('mostrar');
 });
 
 document.addEventListener('mousemove', (e) => {
@@ -65,8 +63,6 @@ document.addEventListener('mouseup', () => {
   isDragging = false;
   // Se o movimento de arraste for grande o suficiente, mostramos os ícones de tesoura
   if (dragAmount > 100) {
-    tesouraEsquerda.classList.add('ativo');
-    tesouraDireita.classList.add('ativo');
   } else {
     telaProxima.style.transform = 'translateY(0)';
   }
