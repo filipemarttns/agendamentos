@@ -274,3 +274,117 @@ button:hover {
     align-items: center;
   }
 }
+.container.ocultar {
+  opacity: 0;
+  filter: blur(10px);
+  pointer-events: none;
+  transition: opacity 1s ease, filter 1s ease;
+}
+.servicos {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.servicos h2 {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+  color: #fff;
+  animation: fadeUp 1s ease forwards;
+}
+
+.servicos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.servico {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  width: 180px;
+  color: white;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.servico:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(255,255,255,0.2);
+}
+
+.servico input[type="checkbox"] {
+  margin-bottom: 10px;
+  transform: scale(1.3);
+}
+
+.servico h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.servico p {
+  font-size: 1rem;
+  margin: 5px 0;
+  color: #ccc;
+}
+
+.servico span {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+#servicos {
+  text-align: center;
+  padding: 30px 10px;
+}
+
+.titulo-servicos {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.lista-servicos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.servico {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 20px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.servico:hover {
+  transform: scale(1.02);
+  border-color: #e53935;
+}
+
+.servico input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
+
+.servico .info h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #000;
+}
+
+.servico .info p {
+  margin: 4px 0 0;
+  font-size: 0.9em;
+  color: #666;
+}

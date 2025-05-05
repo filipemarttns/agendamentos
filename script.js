@@ -4,13 +4,11 @@ const telaInicial = document.getElementById('tela-inicial');
 const telaProxima = document.getElementById('tela-proxima');
 const tituloBemVindo = document.getElementById('titulo-bem-vindo');
 
-
 let isDragging = false;
 let startY = 0;
 let dragAmount = 0;
 let scrollTop = 0;
 
-// Impede rolagem inicialmente
 document.body.style.overflow = 'hidden';
 
 nomeInput.addEventListener('input', () => {
@@ -30,13 +28,10 @@ botao.addEventListener('click', () => {
   setTimeout(() => {
     telaInicial.style.display = 'none';
     telaProxima.classList.add('active');
-    
-    // Libera a rolagem depois que a tela de boas-vindas aparecer
     document.body.style.overflow = 'auto'; 
   }, 300);
 });
 
-// Alternância das frases
 const frases = document.querySelectorAll('.frase');
 let fraseIndex = 0;
 
@@ -46,7 +41,6 @@ setInterval(() => {
   frases[fraseIndex].classList.add('ativo');
 }, 4000);
 
-// Função para detectar o arraste
 telaProxima.addEventListener('mousedown', (e) => {
   isDragging = true;
   startY = e.clientY;
@@ -56,18 +50,24 @@ telaProxima.addEventListener('mousedown', (e) => {
 document.addEventListener('mousemove', (e) => {
   if (!isDragging) return;
   const delta = e.clientY - startY;
-  window.scrollTo(0, scrollTop - delta); // simula o arraste vertical
+  window.scrollTo(0, scrollTop - delta);
 });
 
 document.addEventListener('mouseup', () => {
   isDragging = false;
-  // Se o movimento de arraste for grande o suficiente, mostramos os ícones de tesoura
   if (dragAmount > 100) {
+    // lógica futura se necessário
   } else {
     telaProxima.style.transform = 'translateY(0)';
   }
 });
 
-// Esconder as tesouras quando a tela for resetada
-tesouraEsquerda.classList.remove('ativo');
-tesouraDireita.classList.remove('ativo');
+// MOSTRAR SERVIÇOS AO CLICAR EM QUALQUER BARBEIRO
+document.querySelectorAll('.barbeiro').forEach(barbeiro => {
+  barbeiro.addEventListener('click', () => {
+    const servicos = document.getElementById('servicos');
+    if (servicos) {
+      servicos.style.display = 'block';
+    }
+  });
+});
