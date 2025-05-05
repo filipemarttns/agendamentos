@@ -388,3 +388,32 @@ button:hover {
   font-size: 0.9em;
   color: #666;
 }
+.barbeiro {
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.5s ease, opacity 0.5s ease;
+  position: relative;
+}
+
+.barbeiro.selecionado {
+  transform: scale(1.1);
+  z-index: 2;
+}
+
+.barbeiro.desfocado {
+  opacity: 0.2;
+  filter: grayscale(80%) blur(2px);
+}
+
+/* Animação suave quando aparece a tabela de serviços */
+#tabela-servicos {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+}
+
+#tabela-servicos.visivel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}

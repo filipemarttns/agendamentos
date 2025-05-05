@@ -66,8 +66,28 @@ document.addEventListener('mouseup', () => {
 document.querySelectorAll('.barbeiro').forEach(barbeiro => {
   barbeiro.addEventListener('click', () => {
     const servicos = document.getElementById('servicos');
-    if (servicos) {
-      servicos.style.display = 'block';
+    const isSelecionado = barbeiro.classList.contains('selecionado');
+    const todosBarbeiros = document.querySelectorAll('.barbeiro');
+
+    todosBarbeiros.forEach(b => {
+      b.classList.remove('selecionado', 'desfocado');
+    });
+
+    if (!isSelecionado) {
+      barbeiro.classList.add('selecionado');
+      todosBarbeiros.forEach(b => {
+        if (b !== barbeiro) b.classList.add('desfocado');
+      });
+      if (servicos) {
+        servicos.style.display = 'block'; // exibe a tabela de serviços
+        servicos.classList.add('visivel');
+      }
+    } else {
+      barbeiro.classList.remove('selecionado');
+      if (servicos) {
+        servicos.style.display = 'none'; // esconde a tabela de serviços
+        servicos.classList.remove('visivel');
+      }
     }
   });
 });
