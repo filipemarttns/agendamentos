@@ -223,30 +223,3 @@ button:hover {
     font-size: 0.9rem;
   }
 }
-
-.tesoura {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  opacity: 0;
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-#tesoura-esquerda {
-  left: 10px;
-  transform: translateY(-50%) scaleX(-1);
-}
-
-#tesoura-direita {
-  right: 10px;
-}
-
-.tesoura.mostrar {
-  opacity: 1;
-}
-
-.tesoura.ativo {
-  opacity: 1;
-  transform: translateY(-50%) scale(1.5);
-}

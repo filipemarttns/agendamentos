@@ -4,9 +4,6 @@ const telaInicial = document.getElementById('tela-inicial');
 const telaProxima = document.getElementById('tela-proxima');
 const tituloBemVindo = document.getElementById('titulo-bem-vindo');
 
-// Tesouras
-const tesouraEsquerda = document.getElementById('tesoura-esquerda');
-const tesouraDireita = document.getElementById('tesoura-direita');
 
 let isDragging = false;
 let startY = 0;
