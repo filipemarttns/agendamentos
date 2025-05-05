@@ -110,7 +110,7 @@ function criarCalendario(mes, ano) {
   const calendarioSection = document.getElementById('calendario');
   const checkboxes = document.querySelectorAll('input[name="servico"]');
 
-  // Verificar se algum serviço está selecionado
+  // Verifica se algum serviço está selecionado
   const algumSelecionado = Array.from(checkboxes).some(cb => cb.checked);
   if (!algumSelecionado) {
     calendarioSection.style.display = 'none';
@@ -119,26 +119,19 @@ function criarCalendario(mes, ano) {
     calendarioSection.style.display = 'block';
   }
 
-  calendarioContainer.innerHTML = ''; // Limpar o conteúdo do calendário ao criar novamente
+  calendarioContainer.innerHTML = ''; // Limpa o calendário atual
 
-  // Definindo o primeiro dia do mês
   const primeiroDiaDoMes = new Date(ano, mes, 1);
   const ultimoDiaDoMes = new Date(ano, mes + 1, 0);
   const diasDaSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
-  // Adicionando a frase "Escolha o dia" centralizada
-  const fraseEscolha = document.createElement('div');
-  fraseEscolha.classList.add('frase-escolha');
-  fraseEscolha.textContent = "Escolha o dia";
-  calendarioContainer.appendChild(fraseEscolha);
-
-  // Adicionando o título do mês
+  // Título do mês
   const tituloMes = document.createElement('div');
   tituloMes.classList.add('titulo-mes');
   tituloMes.textContent = `${primeiroDiaDoMes.toLocaleString('default', { month: 'long' })} ${ano}`;
   calendarioContainer.appendChild(tituloMes);
 
-  // Botões para navegar entre os meses
+  // Navegação entre meses
   const navegacaoMes = document.createElement('div');
   navegacaoMes.classList.add('navegacao-mes');
 
@@ -154,56 +147,56 @@ function criarCalendario(mes, ano) {
   navegacaoMes.appendChild(botaoMesProximo);
   calendarioContainer.appendChild(navegacaoMes);
 
-  // Exibir os dias da semana
-  const semanaContainer = document.createElement('div');
-  semanaContainer.classList.add('semana');
+  // Dias da semana
+  const semanaHeader = document.createElement('div');
+  semanaHeader.classList.add('semana');
   diasDaSemana.forEach(dia => {
     const diaSemana = document.createElement('div');
     diaSemana.classList.add('dia-semana');
     diaSemana.textContent = dia;
-    semanaContainer.appendChild(diaSemana);
+    semanaHeader.appendChild(diaSemana);
   });
-  calendarioContainer.appendChild(semanaContainer);
+  calendarioContainer.appendChild(semanaHeader);
 
-  // Criando a grade dos dias
-  let contagemDeDias = 0;
+  // Corpo do calendário
   let semanaAtual = document.createElement('div');
   semanaAtual.classList.add('semana');
-  calendarioContainer.appendChild(semanaAtual);
 
-  // Preenche com espaços vazios antes do primeiro dia do mês
+  // Espaços vazios antes do 1º dia do mês
   for (let i = 0; i < primeiroDiaDoMes.getDay(); i++) {
     const vazio = document.createElement('div');
     vazio.classList.add('dia-vazio');
     semanaAtual.appendChild(vazio);
-    contagemDeDias++;
   }
 
-  // Criando os botões de dia
-  for (let i = 1; i <= ultimoDiaDoMes.getDate(); i++) {
-    const button = document.createElement('button');
-    button.classList.add('dia');
-    button.textContent = i;
-    button.onclick = () => {
-      alert(`Dia selecionado: ${i}`);
-    };
-    semanaAtual.appendChild(button);
-    contagemDeDias++;
+  // Dias do mês
+  for (let dia = 1; dia <= ultimoDiaDoMes.getDate(); dia++) {
+    const botaoDia = document.createElement('button');
+    botaoDia.classList.add('dia');
+    botaoDia.textContent = dia;
+    botaoDia.onclick = () => alert(`Dia selecionado: ${dia}`);
 
-    // Quando a linha estiver cheia, vai para a próxima linha
-    if (contagemDeDias % 7 === 0) {
+    semanaAtual.appendChild(botaoDia);
+
+    // Se completou a semana, adiciona ao DOM e reinicia
+    if (semanaAtual.children.length === 7) {
+      calendarioContainer.appendChild(semanaAtual);
       semanaAtual = document.createElement('div');
       semanaAtual.classList.add('semana');
-      calendarioContainer.appendChild(semanaAtual);
     }
+  }
+
+  // Adiciona a última semana se estiver incompleta
+  if (semanaAtual.children.length > 0) {
+    calendarioContainer.appendChild(semanaAtual);
   }
 }
 
-// Inicia o calendário com o mês atual, mas só se houver serviço selecionado
+// Início automático
 const hoje = new Date();
 criarCalendario(hoje.getMonth(), hoje.getFullYear());
 
-// Verificação dinâmica ao marcar/desmarcar serviços
+// Atualiza o calendário quando marcar/desmarcar serviços
 document.querySelectorAll('input[name="servico"]').forEach(cb => {
   cb.addEventListener('change', () => {
     criarCalendario(hoje.getMonth(), hoje.getFullYear());

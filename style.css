@@ -418,7 +418,7 @@ button:hover {
   pointer-events: auto;
 }
 #calendario-container {
-  display: none; /* Começa escondido */
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -435,7 +435,7 @@ button:hover {
 
 .frase-escolha {
   font-size: 1.2em;
-  margin-bottom: 20px; /* Espaço entre "Escolha o dia" e o título */
+  margin-bottom: 20px;
 }
 
 .semana {
@@ -443,7 +443,9 @@ button:hover {
   grid-template-columns: repeat(7, 1fr);
   gap: 5px;
   width: 100%;
+  max-width: 400px;
   margin-bottom: 10px;
+  justify-content: center;
 }
 
 .dia-semana {
@@ -457,31 +459,35 @@ button:hover {
   background-color: transparent;
 }
 
-.dia {
+button.dia {
+  all: unset;
+  display: inline-block;
   background-color: #4CAF50;
   color: white;
-  border: none;
-  padding: 10px;
-  font-size: 1.2em; /* Aumentei o tamanho da fonte dos botões */
-  border-radius: 5px;
+  font-size: 1.1em;
+  width: 50px;
+  height: 50px;
   text-align: center;
+  line-height: 50px;
+  margin: 2px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-.dia:hover {
+button.dia:hover {
   background-color: #45a049;
-  transform: scale(1.1);
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-.dia:active {
+button.dia:active {
   background-color: #388e3c;
+  transform: scale(0.95);
 }
 
-.dia:disabled {
+button.dia:disabled {
   background-color: #e0e0e0;
   color: #b0b0b0;
   cursor: not-allowed;
@@ -493,19 +499,30 @@ button:hover {
   font-weight: bold;
 }
 
-/* Estilo para tornar o layout responsivo */
+/* Responsivo */
 @media (max-width: 600px) {
-  .dia {
-    font-size: 1em; /* Ajuste o tamanho da fonte em telas menores */
-    padding: 8px;  /* Menos padding para telas pequenas */
-  }
   .dia-semana {
-    font-size: 1em; /* Ajuste o tamanho da fonte dos dias da semana */
+    font-size: 1em;
   }
+
   .titulo-mes {
-    font-size: 1.2em; /* Ajuste o tamanho do título para telas pequenas */
+    font-size: 1.2em;
   }
+
   .frase-escolha {
     font-size: 1em;
+  }
+
+  button.dia {
+    font-size: 1em;
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+    border-radius: 6px;
+  }
+
+  .semana {
+    max-width: 100%;
+    gap: 4px;
   }
 }
