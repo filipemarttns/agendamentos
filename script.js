@@ -9,27 +9,27 @@ let startY = 0;
 let dragAmount = 0;
 let scrollTop = 0;
 
+// Desativa scroll inicial
 document.body.style.overflow = 'hidden';
 
 nomeInput.addEventListener('input', () => {
-  if (nomeInput.value.trim() !== "") {
-    botao.classList.add('mostrar');
-  } else {
-    botao.classList.remove('mostrar');
-  }
+  botao.classList.toggle('mostrar', nomeInput.value.trim() !== "");
 });
 
 botao.addEventListener('click', () => {
   const nome = nomeInput.value.trim();
   tituloBemVindo.textContent = `Bem-vindo, ${nome}!`;
 
+  telaInicial.style.transition = 'all 0.6s ease';
   telaInicial.style.opacity = '0';
   telaInicial.style.filter = 'blur(10px)';
+
   setTimeout(() => {
     telaInicial.style.display = 'none';
     telaProxima.classList.add('active');
-    document.body.style.overflow = 'auto'; 
-  }, 300);
+    telaProxima.style.animation = 'fadeInUp 1s ease';
+    document.body.style.overflow = 'auto';
+  }, 500);
 });
 
 const frases = document.querySelectorAll('.frase');
@@ -56,7 +56,7 @@ document.addEventListener('mousemove', (e) => {
 document.addEventListener('mouseup', () => {
   isDragging = false;
   if (dragAmount > 100) {
-    // lógica futura se necessário
+    // lógica futura
   } else {
     telaProxima.style.transform = 'translateY(0)';
   }
@@ -69,22 +69,20 @@ document.querySelectorAll('.barbeiro').forEach(barbeiro => {
     const isSelecionado = barbeiro.classList.contains('selecionado');
     const todosBarbeiros = document.querySelectorAll('.barbeiro');
 
-    todosBarbeiros.forEach(b => {
-      b.classList.remove('selecionado', 'desfocado');
-    });
+    todosBarbeiros.forEach(b => b.classList.remove('selecionado', 'desfocado'));
 
     if (!isSelecionado) {
       barbeiro.classList.add('selecionado');
-      todosBarbeiros.forEach(b => {
-        if (b !== barbeiro) b.classList.add('desfocado');
-      });
+      todosBarbeiros.forEach(b => b !== barbeiro && b.classList.add('desfocado'));
       if (servicos) {
         servicos.style.display = 'block';
         servicos.classList.add('visivel');
+        servicos.style.animation = 'fadeIn 0.5s ease forwards';
         servicos.scrollIntoView({ behavior: 'smooth' });
       }
       if (calendarioContainer) {
         calendarioContainer.style.display = 'block';
+        calendarioContainer.style.animation = 'fadeIn 0.5s ease';
         criarCalendario(mesAtual, anoAtual);
       }
     } else {
@@ -113,16 +111,21 @@ function criarCalendario(mes, ano) {
     calendarioSection.style.display = 'none';
     return;
   } else {
-    calendarioSection.style.display = 'block';
+    calendarioSection.style.display = 'flex';
   }
 
   calendarioContainer.innerHTML = '';
+
+  // Adicionando título "Deseja marcar para qual dia?" antes do calendário
+  const tituloCalendario = document.createElement('h2');
+  tituloCalendario.classList.add('titulo-calendario');
+  tituloCalendario.textContent = 'Deseja marcar para qual dia?';
+  calendarioContainer.appendChild(tituloCalendario);
 
   const primeiroDiaDoMes = new Date(ano, mes, 1);
   const ultimoDiaDoMes = new Date(ano, mes + 1, 0);
   const diasDaSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
-  // Título do mês com navegação futura
   const tituloWrapper = document.createElement('div');
   tituloWrapper.classList.add('titulo-mes-navegacao');
 
@@ -131,7 +134,6 @@ function criarCalendario(mes, ano) {
   tituloMes.textContent = `${primeiroDiaDoMes.toLocaleString('default', { month: 'long' })} ${ano}`;
   tituloWrapper.appendChild(tituloMes);
 
-  // Botão para mês seguinte
   const botaoProximo = document.createElement('button');
   botaoProximo.classList.add('seta-mes');
   botaoProximo.innerHTML = '→';
@@ -148,7 +150,6 @@ function criarCalendario(mes, ano) {
   tituloWrapper.appendChild(botaoProximo);
   calendarioContainer.appendChild(tituloWrapper);
 
-  // Cabeçalho dos dias da semana
   const semanaHeader = document.createElement('div');
   semanaHeader.classList.add('semana');
   diasDaSemana.forEach(dia => {
@@ -159,7 +160,6 @@ function criarCalendario(mes, ano) {
   });
   calendarioContainer.appendChild(semanaHeader);
 
-  // Corpo do calendário
   let semanaAtual = document.createElement('div');
   semanaAtual.classList.add('semana');
 
@@ -174,6 +174,7 @@ function criarCalendario(mes, ano) {
     botaoDia.classList.add('dia');
     botaoDia.textContent = dia;
     botaoDia.onclick = () => alert(`Dia selecionado: ${dia}`);
+    botaoDia.style.animation = 'scaleFadeIn 0.4s ease';
 
     semanaAtual.appendChild(botaoDia);
 
