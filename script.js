@@ -116,12 +116,6 @@ function criarCalendario(mes, ano) {
 
   calendarioContainer.innerHTML = '';
 
-  // Adicionando título "Deseja marcar para qual dia?" antes do calendário
-  const tituloCalendario = document.createElement('h2');
-  tituloCalendario.classList.add('titulo-calendario');
-  tituloCalendario.textContent = 'Deseja marcar para qual dia?';
-  calendarioContainer.appendChild(tituloCalendario);
-
   const primeiroDiaDoMes = new Date(ano, mes, 1);
   const ultimoDiaDoMes = new Date(ano, mes + 1, 0);
   const diasDaSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
@@ -173,7 +167,7 @@ function criarCalendario(mes, ano) {
     const botaoDia = document.createElement('button');
     botaoDia.classList.add('dia');
     botaoDia.textContent = dia;
-    botaoDia.onclick = () => alert(`Dia selecionado: ${dia}`);
+    botaoDia.onclick = () => abrirPopupHorarios();
     botaoDia.style.animation = 'scaleFadeIn 0.4s ease';
 
     semanaAtual.appendChild(botaoDia);
@@ -197,4 +191,38 @@ document.querySelectorAll('input[name="servico"]').forEach(cb => {
   cb.addEventListener('change', () => {
     criarCalendario(mesAtual, anoAtual);
   });
+});
+
+const horarios = [
+  "07:00", "08:00", "09:00", "10:00",
+  "11:00", "13:00", "14:00", "15:00",
+  "16:00", "17:00", "18:00", "19:00", "20:00"
+];
+
+const popup = document.getElementById("popup-horarios");
+const horariosContainer = document.querySelector(".horarios-lista");
+const fecharBtn = document.querySelector(".fechar-popup");
+
+function abrirPopupHorarios() {
+  horariosContainer.innerHTML = "";
+  horarios.forEach(hora => {
+    const btn = document.createElement("button");
+    btn.textContent = hora;
+    btn.addEventListener("click", () => {
+      console.log("Horário selecionado:", hora);
+      popup.classList.remove("ativo");
+    });
+    horariosContainer.appendChild(btn);
+  });
+  popup.classList.add("ativo");
+}
+
+document.querySelectorAll(".dia").forEach(botao => {
+  botao.addEventListener("click", () => {
+    abrirPopupHorarios();
+  });
+});
+
+fecharBtn.addEventListener("click", () => {
+  popup.classList.remove("ativo");
 });
